@@ -34,6 +34,10 @@ func Opt[T any](opt T) *T {
 // Returns a new instance of [VoyageClient]
 func NewClient(opts *VoyageClientOpts) *VoyageClient {
 	client := &http.Client{} 
+	if opts == nil {
+		opts = &VoyageClientOpts{}
+	}
+
 	if opts.TimeOut != 0.0 {
 		client.Timeout = time.Duration(opts.TimeOut)*time.Millisecond
 	}
