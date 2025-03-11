@@ -11,11 +11,22 @@ import (
 	"math/rand"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
 	"github.com/austinfhunter/voyageai"
 )
+
+func TestNewClientNilOpts(t *testing.T) {
+	err := os.Setenv("VOYAGE_API_KEY", "dummy_key")
+	if err != nil {
+		t.Errorf("Couldn't set up environment: %s", err.Error())
+	}
+
+	// Make sure there are no dereferences of nil attrs when initialized with environment vars
+	_ = voyageai.NewClient(nil)
+}
 
 func TestEmbedRequiredArgsResponse(t *testing.T) {
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
