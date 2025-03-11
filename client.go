@@ -65,7 +65,7 @@ func NewClient(opts *VoyageClientOpts) *VoyageClient {
 }
 
 func (c *VoyageClient) do(req *http.Request) (*http.Response, error) {
-	req.Header.Set("Authorization", "BEARER" + c.apikey)
+	req.Header.Set("Authorization", "BEARER " + c.apikey)
 	return c.client.Do(req)
 }
 
