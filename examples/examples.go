@@ -10,10 +10,19 @@ import (
 func main() {
 	vo := voyageai.NewClient(nil)
 	
-	embeddings, err := vo.Embed([]string{"Embed this text please", "And this as well"}, "voyage-3-lite", nil)
+	embeddings, err := vo.Embed(
+		[]string{
+			"Embed this text please",
+			"And this as well",
+		}, 
+		"voyage-3-lite", 
+		nil,
+	)
+
 	if err != nil {
 		fmt.Printf("Could not get embedding: %s", err.Error())
 	}
+
 	fmt.Printf("%v\n", embeddings.Data[0].Embedding[0:5])
 
 	img, err := os.Open("./assets/gopher.png")
@@ -26,7 +35,7 @@ func main() {
 			Content: []voyageai.MultimodalInput{
 				{
 					Type: "text",
-					Text: "This is a picture of a smart phone",
+					Text: "This is a picture of the Go mascot",
 				},
 				{
 					Type: "image_base64",
