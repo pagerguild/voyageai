@@ -9,13 +9,13 @@ import (
 
 func main() {
 	vo := voyageai.NewClient(nil)
-	
+
 	embeddings, err := vo.Embed(
 		[]string{
 			"Embed this text please",
 			"And this as well",
-		}, 
-		"voyage-3-lite", 
+		},
+		"voyage-3-lite",
 		nil,
 	)
 
@@ -38,7 +38,7 @@ func main() {
 					Text: "This is a picture of the Go mascot",
 				},
 				{
-					Type: "image_base64",
+					Type:        "image_base64",
 					ImageBase64: voyageai.MustGetBase64(img),
 				},
 			},
@@ -50,12 +50,11 @@ func main() {
 		fmt.Printf("Could not get multimodal embedding: %s", err.Error())
 	}
 	fmt.Printf("%v\n", mEmbedding.Data[0].Embedding[0:5])
-	
 
 	reranking, err := vo.Rerank(
 		"This is an example query",
-		[]string{"this is a document", "this is also a document"}, 
-		"rerank-2-lite", 
+		[]string{"this is a document", "this is also a document"},
+		"rerank-2-lite",
 		nil,
 	)
 	if err != nil {
