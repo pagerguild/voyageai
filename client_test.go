@@ -29,7 +29,7 @@ func TestNewClientNilOpts(t *testing.T) {
 }
 
 func TestEmbedRequiredArgsResponse(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.EmbeddingRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -53,14 +53,14 @@ func TestEmbedRequiredArgsResponse(t *testing.T) {
 			Object: "list",
 			Data: []voyageai.EmbeddingObject{
 				{
-					Object: "embedding",
-					Embedding: []float32{0.1,0.2,0.3},
-					Index: 0,
+					Object:    "embedding",
+					Embedding: []float32{0.1, 0.2, 0.3},
+					Index:     0,
 				},
 				{
-					Object: "embedding",
-					Embedding: []float32{0.4,0.5,0.6},
-					Index: 1,
+					Object:    "embedding",
+					Embedding: []float32{0.4, 0.5, 0.6},
+					Index:     1,
 				},
 			},
 			Model: req.Model,
@@ -80,10 +80,10 @@ func TestEmbedRequiredArgsResponse(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
 
 	_, err := cl.Embed([]string{"input1", "input2"}, "test-model", nil)
@@ -93,7 +93,7 @@ func TestEmbedRequiredArgsResponse(t *testing.T) {
 }
 
 func TestEmbedCustomArgsResponse(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.EmbeddingRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -137,14 +137,14 @@ func TestEmbedCustomArgsResponse(t *testing.T) {
 			Object: "list",
 			Data: []voyageai.EmbeddingObject{
 				{
-					Object: "embedding",
-					Embedding: []float32{0.1,0.2,0.3},
-					Index: 0,
+					Object:    "embedding",
+					Embedding: []float32{0.1, 0.2, 0.3},
+					Index:     0,
 				},
 				{
-					Object: "embedding",
-					Embedding: []float32{0.4,0.5,0.6},
-					Index: 1,
+					Object:    "embedding",
+					Embedding: []float32{0.4, 0.5, 0.6},
+					Index:     1,
 				},
 			},
 			Model: req.Model,
@@ -164,18 +164,18 @@ func TestEmbedCustomArgsResponse(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
 
 	embedOpts := voyageai.EmbeddingRequestOpts{
-		EncodingFormat: voyageai.Opt("test_encoding"),
-		InputType: voyageai.Opt("test input type"),
+		EncodingFormat:  voyageai.Opt("test_encoding"),
+		InputType:       voyageai.Opt("test input type"),
 		OutputDimension: voyageai.Opt(4242),
-		OutputDType: voyageai.Opt("test dtype"),
-		Truncation: voyageai.Opt(false),
+		OutputDType:     voyageai.Opt("test dtype"),
+		Truncation:      voyageai.Opt(false),
 	}
 
 	_, err := cl.Embed([]string{"input1", "input2"}, "test-model", &embedOpts)
@@ -185,7 +185,7 @@ func TestEmbedCustomArgsResponse(t *testing.T) {
 }
 
 func TestRerankRequiredArgsResponse(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.RerankRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -214,11 +214,11 @@ func TestRerankRequiredArgsResponse(t *testing.T) {
 			Data: []voyageai.RerankObject{
 				{
 					RelevanceScore: 0.1,
-					Index: 0,
+					Index:          0,
 				},
 				{
 					RelevanceScore: 0.1,
-					Index: 0,
+					Index:          0,
 				},
 			},
 			Model: req.Model,
@@ -238,10 +238,10 @@ func TestRerankRequiredArgsResponse(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
 
 	_, err := cl.Rerank("query", []string{"input1", "input2"}, "test-model", nil)
@@ -251,7 +251,7 @@ func TestRerankRequiredArgsResponse(t *testing.T) {
 }
 
 func TestRerankCustomArgsResponse(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.RerankRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -291,11 +291,11 @@ func TestRerankCustomArgsResponse(t *testing.T) {
 			Data: []voyageai.RerankObject{
 				{
 					RelevanceScore: 0.1,
-					Index: 0,
+					Index:          0,
 				},
 				{
 					RelevanceScore: 0.1,
-					Index: 0,
+					Index:          0,
 				},
 			},
 			Model: req.Model,
@@ -315,16 +315,16 @@ func TestRerankCustomArgsResponse(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
 
 	opts := voyageai.RerankRequestOpts{
-		TopK: voyageai.Opt(3),
+		TopK:            voyageai.Opt(3),
 		ReturnDocuments: voyageai.Opt(false),
-		Truncation: voyageai.Opt(false),
+		Truncation:      voyageai.Opt(false),
 	}
 
 	_, err := cl.Rerank("query", []string{"input1", "input2"}, "test-model", &opts)
@@ -353,8 +353,8 @@ func validateDataURL(url string) (bool, error) {
 	strs := strings.Split(url, ",")
 	header := strs[0]
 	data := strs[1]
-	mtype := strings.Split(strings.Split(header, ":")[1],";")[0]
-	b64 := strings.Split(header,";")[1]
+	mtype := strings.Split(strings.Split(header, ":")[1], ";")[0]
+	b64 := strings.Split(header, ";")[1]
 
 	res = res && (strings.Split(header, ":")[0] == "data")
 	res = res && (b64 == "base64")
@@ -368,7 +368,7 @@ func validateDataURL(url string) (bool, error) {
 }
 
 func TestMultimodalRequiredArgsRequest(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.MultimodalRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -393,7 +393,6 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 			t.Fatal(err.Error())
 		}
 
-
 		if !v {
 			t.Error("Invalid data url")
 		}
@@ -402,14 +401,14 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 			Object: "list",
 			Data: []voyageai.EmbeddingObject{
 				{
-					Object: "embedding",
-					Embedding: []float32{0.1,0.2,0.3},
-					Index: 0,
+					Object:    "embedding",
+					Embedding: []float32{0.1, 0.2, 0.3},
+					Index:     0,
 				},
 				{
-					Object: "embedding",
-					Embedding: []float32{0.4,0.5,0.6},
-					Index: 1,
+					Object:    "embedding",
+					Embedding: []float32{0.4, 0.5, 0.6},
+					Index:     1,
 				},
 			},
 			Model: req.Model,
@@ -429,12 +428,11 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
-
 
 	dummyImage1, err := createDummyImage(rand.Intn(1200), rand.Intn(630))
 	if err != nil {
@@ -445,7 +443,6 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Couldn't create test image: %s", err.Error())
 	}
-
 
 	inputs := []voyageai.MultimodalContent{
 		{
@@ -463,7 +460,7 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 }
 
 func TestMultimodalRequiredCustomRequest(t *testing.T) {
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var req voyageai.MultimodalRequest
 		b, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -491,7 +488,7 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 			t.Fatal("Expected non-nil value for 'OutputEncoding'")
 		}
 
-		if req.InputType == nil  {
+		if req.InputType == nil {
 			t.Fatal("Expected non-nil value for 'InputType'")
 		}
 
@@ -499,7 +496,6 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 		if err != nil {
 			t.Fatal(err.Error())
 		}
-
 
 		if !v {
 			t.Error("Invalid data url")
@@ -509,14 +505,14 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 			Object: "list",
 			Data: []voyageai.EmbeddingObject{
 				{
-					Object: "embedding",
-					Embedding: []float32{0.1,0.2,0.3},
-					Index: 0,
+					Object:    "embedding",
+					Embedding: []float32{0.1, 0.2, 0.3},
+					Index:     0,
 				},
 				{
-					Object: "embedding",
-					Embedding: []float32{0.4,0.5,0.6},
-					Index: 1,
+					Object:    "embedding",
+					Embedding: []float32{0.4, 0.5, 0.6},
+					Index:     1,
 				},
 			},
 			Model: req.Model,
@@ -536,12 +532,11 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 	defer s.Close()
 
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: 3, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: 3,
+		BaseURL:    s.URL,
 	})
-
 
 	dummyImage1, err := createDummyImage(rand.Intn(1200), rand.Intn(630))
 	if err != nil {
@@ -563,8 +558,8 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 	}
 
 	opts := voyageai.MultimodalRequestOpts{
-		InputType: voyageai.Opt("Test type"),
-		Truncation: voyageai.Opt(false),
+		InputType:     voyageai.Opt("Test type"),
+		Truncation:    voyageai.Opt(false),
 		OuputEncoding: voyageai.Opt("base64"),
 	}
 
@@ -576,7 +571,7 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 
 func TestMaxRetries(t *testing.T) {
 	retries := 0
-	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("Authorization") == "" {
 			apiErr := voyageai.APIError{Detail: "User unauthorized"}
 			b, err := json.Marshal(apiErr)
@@ -596,19 +591,19 @@ func TestMaxRetries(t *testing.T) {
 		err = json.Unmarshal(b, &req)
 		if err != nil {
 			t.Fatalf("Invalid request body")
-		}		
+		}
 		resp := voyageai.EmbeddingResponse{
 			Object: "list",
 			Data: []voyageai.EmbeddingObject{
 				{
-					Object: "embedding",
-					Embedding: []float32{0.1,0.2,0.3},
-					Index: 0,
+					Object:    "embedding",
+					Embedding: []float32{0.1, 0.2, 0.3},
+					Index:     0,
 				},
 				{
-					Object: "embedding",
-					Embedding: []float32{0.4,0.5,0.6},
-					Index: 1,
+					Object:    "embedding",
+					Embedding: []float32{0.4, 0.5, 0.6},
+					Index:     1,
 				},
 			},
 			Model: req.Model,
@@ -633,10 +628,10 @@ func TestMaxRetries(t *testing.T) {
 
 	maxRetries := rand.Intn(10) + 1
 	cl := voyageai.NewClient(&voyageai.VoyageClientOpts{
-		Key: "APIKEY", 
-		TimeOut: 1500, 
-		MaxRetries: maxRetries, 
-		BaseURL: s.URL,
+		Key:        "APIKEY",
+		TimeOut:    1500,
+		MaxRetries: maxRetries,
+		BaseURL:    s.URL,
 	})
 
 	_, err := cl.Embed([]string{"input1", "input2"}, "test-model", nil)
