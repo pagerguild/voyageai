@@ -15,12 +15,15 @@ import (
 type Model = string
 
 const (
-	ModelVoyage3Large   Model = "voyage-3-large"
-	ModelVoyage3        Model = "voyage-3"
-	ModelVoyage3Lite    Model = "voyage-3-lite"
-	ModelVoyageCode3    Model = "voyage-code-3"
-	ModelVoyageFinance2 Model = "voyage-finance-2"
-	ModelVoyageLaw2     Model = "voyage-law-2"
+	ModelVoyage3Large      Model = "voyage-3-large"
+	ModelVoyage3           Model = "voyage-3"
+	ModelVoyage3Lite       Model = "voyage-3-lite"
+	ModelVoyageMultimodal3 Model = "voyage-multimodal-3"
+	ModelVoyageCode3       Model = "voyage-code-3"
+	ModelVoyageFinance2    Model = "voyage-finance-2"
+	ModelVoyageLaw2        Model = "voyage-law-2"
+	ModelRerank2           Model = "rerank-2"
+	ModelRerank2Lite       Model = "rerank-2-lite"
 )
 
 // OutputDimension represents the dimension size for embedding outputs.
