@@ -64,7 +64,7 @@ func TestEmbedRequiredArgsResponse(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -148,7 +148,7 @@ func TestEmbedCustomArgsResponse(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -222,7 +222,7 @@ func TestRerankRequiredArgsResponse(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -299,7 +299,7 @@ func TestRerankCustomArgsResponse(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -412,7 +412,7 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -516,7 +516,7 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}
@@ -607,7 +607,7 @@ func TestMaxRetries(t *testing.T) {
 				},
 			},
 			Model: req.Model,
-			Useage: voyageai.UsageObject{
+			Usage: voyageai.UsageObject{
 				TotalTokens: 10,
 			},
 		}

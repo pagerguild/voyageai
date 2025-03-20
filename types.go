@@ -12,7 +12,7 @@ import (
 )
 
 // A list of models supported by the Voyage AI API.
-type Model string
+type Model = string
 
 const (
 	ModelVoyage3Large   Model = "voyage-3-large"
@@ -24,7 +24,7 @@ const (
 )
 
 // OutputDimension represents the dimension size for embedding outputs.
-type OutputDimension int
+type OutputDimension = int
 
 const (
 	OutputDimension256  OutputDimension = 256
@@ -71,7 +71,7 @@ type EmbeddingObject struct {
 	Index     int       `json:"index"`     // An integer representing the index of the embedding within the list of embeddings.
 }
 
-// Contains details about system useage.
+// Contains details about system usage.
 type UsageObject struct {
 	TotalTokens int  `json:"total_tokens"`           // The total number of tokens used for computing the embeddings.
 	ImagePixels *int `json:"image_pixels,omitempty"` // The total number of image pixels in the list of inputs.
@@ -83,7 +83,7 @@ type EmbeddingResponse struct {
 	Object string            `json:"object"` // The object type, which is always "list".
 	Data   []EmbeddingObject `json:"data"`   // An array of embedding objects.
 	Model  string            `json:"model"`  // Name of the model.
-	Useage UsageObject       `json:"useage"` // An object containing useage details
+	Usage  UsageObject       `json:"usage"`  // An object containing usage details
 }
 
 type text string
@@ -256,5 +256,5 @@ type RerankResponse struct {
 	Object string         `json:"object"` // The object type, which is always "list".
 	Data   []RerankObject `json:"data"`   // An array of the reranking results, sorted by the descending order of relevance scores.
 	Model  string         `json:"model"`  // Name of the model.
-	Useage UsageObject    `json:"useage"` // An object containing useage details
+	Usage  UsageObject    `json:"usage"`  // An object containing usage details
 }
