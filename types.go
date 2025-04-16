@@ -3,12 +3,14 @@ package voyageai
 import (
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"io"
+	"math"
 )
 
 // A list of models supported by the Voyage AI API.
@@ -67,11 +69,82 @@ type EmbeddingRequestOpts struct {
 	EncodingFormat  *string `json:"encoding_format,omitempty"`  // Format in which the embeddings are encoded. Defaults to null. Other options: base64.
 }
 
+type Embedding[T float32 | uint8 | int8] struct {
+	AsNumeric []T
+	AsBase64  *string
+}
+
+func (e Embedding[T]) ToSlice() ([]T, error) {
+	if e.AsNumeric != nil {
+		return e.AsNumeric, nil
+	}
+	var v []T
+	data, err := base64.StdEncoding.DecodeString(*e.AsBase64)
+	if err != nil {
+		return nil, err
+	}
+
+	var empty T
+	switch any(empty).(type) {
+	case float32:
+		// For float32, we need to interpret every 4 bytes as a float32
+		if len(data)%4 != 0 {
+			return nil, fmt.Errorf("invalid float32 data length: %d", len(data))
+		}
+		v = make([]T, len(data)/4)
+		for i := 0; i < len(data); i += 4 {
+			// Convert 4 bytes to float32 (little-endian)
+			bits := uint32(data[i]) | uint32(data[i+1])<<8 | uint32(data[i+2])<<16 | uint32(data[i+3])<<24
+			f := float32(math.Float32frombits(bits))
+			v[i/4] = any(f).(T)
+		}
+	case uint8:
+		// For uint8, we can use the bytes directly
+		v = make([]T, len(data))
+		for i, b := range data {
+			v[i] = any(b).(T)
+		}
+	case int8:
+		// For int8, we need to convert each uint8 to int8
+		v = make([]T, len(data))
+		for i, b := range data {
+			v[i] = any(int8(b)).(T)
+		}
+	default:
+		return nil, fmt.Errorf("unsupported type for embedding")
+	}
+
+	return v, nil
+}
+
+func (e Embedding[T]) MarshalJSON() ([]byte, error) {
+	if e.AsNumeric != nil {
+		return json.Marshal(e.AsNumeric)
+	}
+	return json.Marshal(e.AsBase64)
+}
+
+func (e *Embedding[T]) UnmarshalJSON(data []byte) error {
+	if len(data) == 0 {
+		return nil
+	}
+	if data[0] == '"' {
+		return json.Unmarshal(data, &e.AsBase64)
+	}
+
+	var v []T
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	e.AsNumeric = v
+	return nil
+}
+
 // An embedding object. Part of the data returned by the /embed endpoint
-type EmbeddingObject struct {
-	Object    string    `json:"object"`    // The object type, which is always "embedding".
-	Embedding []float32 `json:"embedding"` // An array of embedding objects.
-	Index     int       `json:"index"`     // An integer representing the index of the embedding within the list of embeddings.
+type EmbeddingObject[T float32 | uint8 | int8] struct {
+	Object    string       `json:"object"`    // The object type, which is always "embedding".
+	Embedding Embedding[T] `json:"embedding"` // An array of embedding objects.
+	Index     int          `json:"index"`     // An integer representing the index of the embedding within the list of embeddings.
 }
 
 // Contains details about system usage.
@@ -82,11 +155,11 @@ type UsageObject struct {
 }
 
 // The response from the /embed and /multimodalembed endpoints
-type EmbeddingResponse struct {
-	Object string            `json:"object"` // The object type, which is always "list".
-	Data   []EmbeddingObject `json:"data"`   // An array of embedding objects.
-	Model  string            `json:"model"`  // Name of the model.
-	Usage  UsageObject       `json:"usage"`  // An object containing usage details
+type EmbeddingResponse[T float32 | uint8 | int8] struct {
+	Object string               `json:"object"` // The object type, which is always "list".
+	Data   []EmbeddingObject[T] `json:"data"`   // An array of embedding objects.
+	Model  string               `json:"model"`  // Name of the model.
+	Usage  UsageObject          `json:"usage"`  // An object containing usage details
 }
 
 type text string

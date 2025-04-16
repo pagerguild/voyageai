@@ -49,17 +49,17 @@ func TestEmbedRequiredArgsResponse(t *testing.T) {
 			t.Errorf("Expected non-empty value for 'Model'")
 		}
 
-		resp := voyageai.EmbeddingResponse{
+		resp := voyageai.EmbeddingResponse[float32]{
 			Object: "list",
-			Data: []voyageai.EmbeddingObject{
+			Data: []voyageai.EmbeddingObject[float32]{
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.1, 0.2, 0.3},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.1, 0.2, 0.3}},
 					Index:     0,
 				},
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.4, 0.5, 0.6},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.4, 0.5, 0.6}},
 					Index:     1,
 				},
 			},
@@ -133,17 +133,17 @@ func TestEmbedCustomArgsResponse(t *testing.T) {
 			t.Errorf("Expected non-nil value for 'OutputDimension'")
 		}
 
-		resp := voyageai.EmbeddingResponse{
+		resp := voyageai.EmbeddingResponse[float32]{
 			Object: "list",
-			Data: []voyageai.EmbeddingObject{
+			Data: []voyageai.EmbeddingObject[float32]{
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.1, 0.2, 0.3},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.1, 0.2, 0.3}},
 					Index:     0,
 				},
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.4, 0.5, 0.6},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.4, 0.5, 0.6}},
 					Index:     1,
 				},
 			},
@@ -397,17 +397,17 @@ func TestMultimodalRequiredArgsRequest(t *testing.T) {
 			t.Error("Invalid data url")
 		}
 
-		resp := voyageai.EmbeddingResponse{
+		resp := voyageai.EmbeddingResponse[float32]{
 			Object: "list",
-			Data: []voyageai.EmbeddingObject{
+			Data: []voyageai.EmbeddingObject[float32]{
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.1, 0.2, 0.3},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.1, 0.2, 0.3}},
 					Index:     0,
 				},
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.4, 0.5, 0.6},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.4, 0.5, 0.6}},
 					Index:     1,
 				},
 			},
@@ -501,17 +501,17 @@ func TestMultimodalRequiredCustomRequest(t *testing.T) {
 			t.Error("Invalid data url")
 		}
 
-		resp := voyageai.EmbeddingResponse{
+		resp := voyageai.EmbeddingResponse[float32]{
 			Object: "list",
-			Data: []voyageai.EmbeddingObject{
+			Data: []voyageai.EmbeddingObject[float32]{
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.1, 0.2, 0.3},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.1, 0.2, 0.3}},
 					Index:     0,
 				},
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.4, 0.5, 0.6},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.4, 0.5, 0.6}},
 					Index:     1,
 				},
 			},
@@ -592,17 +592,17 @@ func TestMaxRetries(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Invalid request body")
 		}
-		resp := voyageai.EmbeddingResponse{
+		resp := voyageai.EmbeddingResponse[float32]{
 			Object: "list",
-			Data: []voyageai.EmbeddingObject{
+			Data: []voyageai.EmbeddingObject[float32]{
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.1, 0.2, 0.3},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.1, 0.2, 0.3}},
 					Index:     0,
 				},
 				{
 					Object:    "embedding",
-					Embedding: []float32{0.4, 0.5, 0.6},
+					Embedding: voyageai.Embedding[float32]{AsNumeric: []float32{0.4, 0.5, 0.6}},
 					Index:     1,
 				},
 			},

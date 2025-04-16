@@ -23,7 +23,7 @@ func main() {
 		fmt.Printf("Could not get embedding: %s", err.Error())
 	}
 
-	fmt.Printf("Embeddings (First 5): %v\n", embeddings.Data[0].Embedding[0:5])
+	fmt.Printf("Embeddings (First 5): %v\n", embeddings.Data[0].Embedding.AsNumeric[0:5])
 	fmt.Printf("Usage: %v\n", embeddings.Usage)
 
 	img, err := os.Open("./assets/gopher.png")
@@ -50,7 +50,7 @@ func main() {
 	if err != nil {
 		fmt.Printf("Could not get multimodal embedding: %s", err.Error())
 	}
-	fmt.Printf("Multimodal Embeddings (First 5): %v\n", mEmbedding.Data[0].Embedding[0:5])
+	fmt.Printf("Multimodal Embeddings (First 5): %v\n", mEmbedding.Data[0].Embedding.AsNumeric[0:5])
 	fmt.Printf("Usage: %v\n", mEmbedding.Usage)
 
 	reranking, err := vo.Rerank(

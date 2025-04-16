@@ -142,15 +142,41 @@ func (c *VoyageClient) handleAPIRequest(reqBody any, respBody any, url string) e
 	return nil
 }
 
+func (c *VoyageClient) Embed(texts []string, model string, opts *EmbeddingRequestOpts) (*EmbeddingResponse[float32], error) {
+	return embed[float32](c, texts, model, opts)
+}
+
+func (c *VoyageClient) EmbedInt8(texts []string, model string, opts *EmbeddingRequestOpts) (*EmbeddingResponse[int8], error) {
+	var _opts EmbeddingRequestOpts
+	if opts != nil {
+		_opts = *opts
+	}
+	if _opts.OutputDType == nil {
+		_opts.OutputDType = Opt("int8")
+	}
+	return embed[int8](c, texts, model, &_opts)
+}
+
+func (c *VoyageClient) EmbedUint8(texts []string, model string, opts *EmbeddingRequestOpts) (*EmbeddingResponse[uint8], error) {
+	var _opts EmbeddingRequestOpts
+	if opts != nil {
+		_opts = *opts
+	}
+	if _opts.OutputDType == nil {
+		_opts.OutputDType = Opt("uint8")
+	}
+	return embed[uint8](c, texts, model, &_opts)
+}
+
 // Returns a pointer to an [EmbeddingResponse] or an error if the request failed.
 //
 // Parameters:
 //   - texts - A list of texts as a list of strings, such as ["I like cats", "I also like dogs"]
 //   - model - Name of the model. Recommended options: voyage-3-large, voyage-3, voyage-3-lite, voyage-code-3, voyage-finance-2, voyage-law-2.
 //   - opts - optional parameters, see [EmbeddingRequestOpts]
-func (c *VoyageClient) Embed(texts []string, model string, opts *EmbeddingRequestOpts) (*EmbeddingResponse, error) {
+func embed[T float32 | uint8 | int8](c *VoyageClient, texts []string, model string, opts *EmbeddingRequestOpts) (*EmbeddingResponse[T], error) {
 	var reqBody EmbeddingRequest
-	var respBody EmbeddingResponse
+	var respBody EmbeddingResponse[T]
 	if opts != nil {
 		reqBody = EmbeddingRequest{
 			Input:           texts,
@@ -180,9 +206,9 @@ func (c *VoyageClient) Embed(texts []string, model string, opts *EmbeddingReques
 //   - opts - Optional parameters, see [MultimodalRequestOpts]
 //
 // [Voyage AI docs]: https://docs.voyageai.com/docs/multimodal-embeddings
-func (c *VoyageClient) MultimodalEmbed(inputs []MultimodalContent, model string, opts *MultimodalRequestOpts) (*EmbeddingResponse, error) {
+func (c *VoyageClient) MultimodalEmbed(inputs []MultimodalContent, model string, opts *MultimodalRequestOpts) (*EmbeddingResponse[float32], error) {
 	var reqBody MultimodalRequest
-	var respBody EmbeddingResponse
+	var respBody EmbeddingResponse[float32]
 	if opts != nil {
 		reqBody = MultimodalRequest{
 			Inputs:        inputs,

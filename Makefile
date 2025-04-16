@@ -1,4 +1,4 @@
-.PHONY: fmt fmt-check test
+.PHONY: fmt fmt-check test integration_test
 
 fmt:
 	go fmt ./...
@@ -8,3 +8,6 @@ fmt-check:
 
 test:
 	go test -v ./...
+
+integration_test:
+	go test -v -tags=integration ./...
