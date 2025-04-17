@@ -1,10 +1,3 @@
-module github.com/austinfhunter/voyageai
+module github.com/pagerguild/voyageai
 
-go 1.23.4
-
-retract (
-	v0.1.2
-	v0.1.1
-	v0.1.0
-	v1.1.0
-)
+go 1.24.2

@@ -2,7 +2,7 @@
 `voyageai` is a Go client for [Voyage AI](https://www.voyageai.com/)
 ## Installation
 ```bash
-go get github.com/austinfhunter/voyageai
+go get github.com/pagerguild/voyageai
 ```
 ## Usage
 ### Generating Embeddings
